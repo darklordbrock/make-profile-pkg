@@ -216,16 +216,16 @@ PROFILE_ID="%s"
 VERSION_INSTALLED=`/usr/sbin/pkgutil --pkg-info "$PKG_ID" | grep version | sed 's/^[^:]*: //'`
 
 if ( /usr/bin/profiles -P | /usr/bin/grep -q $PROFILE_ID ); then
-    # Profile is present, check the version
+    echo "Profile is present, check the version"
     if [ "$VERSION_INSTALLED" = "$PKG_VERSION" ]; then
-        # Correct version, all good
-        exit 1
-    else
+        echo "Correct version, all good"
         exit 0
+    else
+        exit 1
     fi
 else
-    # Profile isn't there, need to install
-    exit 0
+    echo "Profile isn't there, need to install"
+    exit 1
 fi
 """ % (version, pkg_identifier, profile_identifier)
     with open(installcheck_script_path, "w") as fd:
